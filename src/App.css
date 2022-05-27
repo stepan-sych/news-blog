@@ -1,0 +1,113 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+:focus, :active {
+    outline: none;
+}
+
+a:focus, a:active {
+    outline: none;
+}
+
+nav, footer, header, aside {
+    display: block;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+    font-family: inherit;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+a, a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: 400;
+}
+
+body {
+    font-family: "Roboto Light", sans-serif;
+}
+
+.Header {
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.App-background-image {
+    background-image: url(
+    "images/free-website-background-07.jpg");
+    background-size: cover;
+    height: 100vh;
+    margin-top: -70px;
+    font-size: 50px;
+    background-repeat: no-repeat;
+}
+
+.App-icons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Icon {
+    color: #726c6c;
+    padding: 9px 6px;
+    height: 20px;
+}
+
+a:hover {
+    color: white;
+}
+
+.Current-date {
+    display: inline-block;
+    text-transform: uppercase;
+    padding: 9px 6px;
+    font-size: 20px;
+}
