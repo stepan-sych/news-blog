@@ -14,6 +14,8 @@ This clones the repo
 `$ npm install`
 
 This installs the required dependencies
+>Use node - v18.1.0 and npm - 8.8.0
+
 
 3. To run the React project.
    `$ npm start`
