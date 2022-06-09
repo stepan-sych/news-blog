@@ -1,24 +1,60 @@
 import React from 'react';
-import {FaFacebook, FaInstagram, FaTelegram, FaTwitter, FaViber, FaYoutube} from "react-icons/fa";
+import {FaDollarSign, FaEuroSign, FaSearch,} from "react-icons/fa";
+import {WiCelsius, WiCloudRefresh} from "react-icons/wi";
 import './App.css';
 import CurrentDate from "./components/CurrentDate";
+import SocialIcons from './components/SocialIcons';
+import NavigationMenu from "./components/NavigationMenu";
+import {makeStyles} from "@mui/styles";
+import {MainArticles} from "./components/MainArticles";
+import {AverageSalary} from "./components/AverageSalary";
+
+
+const useStyles = makeStyles({
+    wrapper: {
+        backgroundImage: "url(/free-website-background-07.jpg)",
+        objectFit: "cover",
+    },
+});
 
 const App = () => {
-
+    const classes = useStyles();
     return (
         <div className="App">
-            <header className="Header">
-                <CurrentDate/>
-                <div className="App-icons">
-                    <a className="Icon" href="https://facebook.com/"><FaFacebook size={20}/></a>
-                    <a className="Icon" href="https://youtube.com/"><FaYoutube size={20}/></a>
-                    <a className="Icon" href="https://instagram.com/"><FaInstagram size={20}/></a>
-                    <a className="Icon" href="https://telegram.com/"><FaTelegram size={20}/></a>
-                    <a className="Icon" href="https://viber.com/"><FaViber size={20}/></a>
-                    <a className="Icon" href="https://twitter.com/"><FaTwitter size={20}/></a>
+            <div className={classes.wrapper}>
+                <div className="Container">
+                    <header className="Header">
+                        <div className="Header-items">
+                            <CurrentDate/>
+                            <div className="Currency"><FaDollarSign/>29.25</div>
+                            <div className="Currency"><FaEuroSign/>31.50</div>
+                            <div className="Weather">
+                                <WiCloudRefresh/>
+                                <div className="Value">+17</div>
+                                <WiCelsius/>
+                            </div>
+                        </div>
+                        <SocialIcons/>
+                    </header>
+                    <nav>
+                        <NavigationMenu/>
+                        <div className="Special-menu">
+                            <div className="Menu Live">LIVE
+                                <div className="Red-point">
+                                </div>
+                            </div>
+                            <div className="Menu">RU</div>
+                            <div className="Menu">EN</div>
+                            <div className="Menu Search"><FaSearch/></div>
+                        </div>
+                    </nav>
+                    <div className="Logo-title">
+                        <img src="/mainLogo.svg" alt=""/>
+                        <h2>ЗАГОЛОВОК ГОЛОВНОЇ НОВИНИ ДНЯ!</h2>
+                    </div>
+                    <MainArticles/>
                 </div>
-            </header>
-            <div className="App-background-image">
+                <AverageSalary/>
             </div>
         </div>
     );
