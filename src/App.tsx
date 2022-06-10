@@ -1,13 +1,14 @@
 import React from 'react';
-import {FaDollarSign, FaEuroSign, FaSearch,} from "react-icons/fa";
-import {WiCelsius, WiCloudRefresh} from "react-icons/wi";
 import './App.css';
 import CurrentDate from "./components/CurrentDate";
 import SocialIcons from './components/SocialIcons';
-import NavigationMenu from "./components/NavigationMenu";
-import {makeStyles} from "@mui/styles";
 import {MainArticles} from "./components/MainArticles";
 import {AverageSalary} from "./components/AverageSalary";
+import NavigationMenu from "./components/NavigationMenu";
+import {makeStyles} from "@mui/styles";
+import {FaDollarSign, FaEuroSign, FaSearch} from "react-icons/fa";
+import {WiCelsius, WiCloudRefresh} from "react-icons/wi";
+
 
 
 const useStyles = makeStyles({
@@ -16,6 +17,8 @@ const useStyles = makeStyles({
         objectFit: "cover",
     },
 });
+
+
 
 const App = () => {
     const classes = useStyles();

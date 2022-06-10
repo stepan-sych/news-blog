@@ -1,3 +1,4 @@
+import React from "react";
 import {FaFacebook, FaInstagram, FaTelegram, FaTwitter, FaViber, FaYoutube} from "react-icons/fa";
 
 const socialIcons = [{componentIcon: <FaFacebook size={20}/>, link: "https://facebook.com/", idIcon: "1"}, {
