@@ -1,0 +1,223 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+:focus, :active {
+    outline: none;
+}
+
+a:focus, a:active {
+    outline: none;
+}
+
+nav, footer, header, aside {
+    display: block;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+    font-family: inherit;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+a, a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: 400;
+}
+
+body {
+    font-family: "Roboto Light", sans-serif;
+    color: rgba(0, 0, 0, 0.88);
+}
+
+.Container {
+    padding: 0 20px;
+}
+
+/*.Wrapper {*/
+/*    background-image: url("images/free-website-background-07.jpg");*/
+/*}*/
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Header-social-icons {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.Icon {
+    color: #726c6c;
+    padding: 9px 6px;
+    width: 44px;
+    height: 36px;
+}
+
+a:hover {
+    color: white;
+}
+
+.Header-items {
+    display: flex;
+    align-items: center;
+}
+
+.Current-date {
+    text-transform: uppercase;
+    padding: 9px 6px;
+    font-size: 18px;
+}
+
+.Currency {
+    display: inline-flex;
+    padding: 9px 6px;
+    font-size: 18px;
+}
+
+.Weather {
+    display: inline-flex;
+    padding: 9px 6px;
+    font-size: 2.5em;
+}
+
+.Weather .Value {
+    font-size: 18px;
+    align-self: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.List-menu {
+    display: flex;
+}
+
+.Special-menu {
+    display: flex;
+}
+
+.Menu {
+    padding: 13px 9px 15px;
+}
+
+.Live {
+    display: flex;
+    align-items: baseline;
+}
+
+.Red-point {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    align-self: flex-start;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.Search {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.Cards-articles {
+    display: flex;
+    justify-content: space-between;
+    margin: 100px 0;
+    color: rgba(0, 0, 0, 0.88);
+}
+
+.Card {
+    width: 33%;
+}
+
+.Card p {
+    padding: 0 50px 0 0;
+    font-size: 25px;
+}
+
+.Card a {
+    padding: 0 0 10px 0;
+    color: rgba(0, 0, 0, 0.88);
+}
+
+.Card a:hover {
+    color: #726c6c;
+}
+
+.Border {
+    border-right: #726c6c 2px solid;
+}
+
+.Average-salary {
+    width: 100%;
+    max-height: 150px;
+    background-color: #b70e0e;
+    padding: 0 20px;
+    font-size: 20px;
+}
+
+.Box-salary {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Average-salary h3 {
+    padding: 10px 0;
+}
+
+.Salary {
+    padding: 0 20px 20px 0;
+}
