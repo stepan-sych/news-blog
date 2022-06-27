@@ -120,6 +120,11 @@ a:hover {
     display: inline-flex;
     padding: 9px 6px;
     font-size: 18px;
+    color: rgba(0, 0, 0, 0.88);
+}
+
+.Currency:hover {
+    color: white;
 }
 
 .Weather {
