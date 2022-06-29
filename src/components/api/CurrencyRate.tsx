@@ -17,6 +17,7 @@ export const CurrencyRate: FC = (): ReactElement => {
         axios.get<CurrencyRateType[]>('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
             .then((response: AxiosResponse<CurrencyRateType[]>) => {
                 setRateValues(response.data);
+                console.log(response.data);
             })
             .catch((error) => {
                 console.error("Error gating currency!", error.message)

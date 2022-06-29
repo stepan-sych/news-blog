@@ -32,13 +32,6 @@ const Application = () => {
                             <div className="Value">+17</div>
                             <WiCelsius/>
                         </div>
-                        <div>
-                            <Routes>
-                                <Route path={'/'}></Route>
-                                <Route path={'/currency'} element={<CurrencyCalculation/>}>
-                                </Route>
-                            </Routes>
-                        </div>
                     </div>
                     <SocialIcons/>
                 </header>

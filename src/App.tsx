@@ -11,11 +11,10 @@ const App = () => {
     return (
         <div className="App">
                 <Routes>
-                    <Route path={'/'} element={<Application/>}></Route>
+                    <Route path={'*'} element={<Application/>}></Route>
                     <Route path={'/currency'} element={<CurrencyCalculation/>}>
                     </Route>
                 </Routes>
-
         </div>
     );
 }
