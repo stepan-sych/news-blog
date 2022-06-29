@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react';
 import {makeStyles} from "@mui/styles";
 import PropTypes from "prop-types";
+import {colors} from "../theme/colors";
 
 const useStyles = makeStyles({
     inputAmount: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles({
     },
     selectCurrency: {
         height: "30px",
-        border: "1px solid black",
+        border: `1px solid ${colors.black}`,
         padding: "0 0 0 5px",
         margin: "0 0 0 5px"
     },

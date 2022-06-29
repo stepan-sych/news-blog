@@ -4,12 +4,13 @@ import {makeStyles} from "@mui/styles";
 import {CurrencyInput} from "../header_components/CurrencyInput";
 import axios, {AxiosResponse} from "axios";
 import {CurrencyRateType} from "../../types/CurrencyRateType";
+import {colors} from "../theme/colors";
 
 const useStyles = makeStyles({
     goHome: {
         width: "100px",
         height: "50px",
-        backgroundColor: "blue"
+        backgroundColor: colors.blues[0]
     },
     currencyForm: {
         display: "flex",

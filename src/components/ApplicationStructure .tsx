@@ -1,9 +1,8 @@
 import React from 'react';
 import CurrentDate from "./header_components/CurrentDate";
-import {Link, Route, Routes} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {CurrencyRate} from "./api/CurrencyRate";
 import {WiCelsius, WiCloudRefresh} from "react-icons/wi";
-import {CurrencyCalculation} from "./pages/CurrencyСalculation";
 import SocialIcons from "./header_components/SocialIcons";
 import NavigationMenu from "./header_components/NavigationMenu";
 import {FaSearch} from "react-icons/fa";
@@ -18,7 +17,7 @@ const useStyles = makeStyles({
     },
 });
 
-const Application = () => {
+const ApplicationStructure = () => {
     const classes = useStyles();
     return (
         <div className={classes.wrapper}>
@@ -59,4 +58,4 @@ const Application = () => {
     );
 };
 
-export default Application;
+export default ApplicationStructure;
