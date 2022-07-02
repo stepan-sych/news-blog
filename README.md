@@ -19,6 +19,9 @@ This installs the required dependencies
 
 3. To run the React project.
    `$ npm start`
+>Use to start the project:
+>* Node version 16.15.0
+>* npm version 8.5.5
 
 **You are done!** Now you can start editing
 the React project in the new folder that's created.

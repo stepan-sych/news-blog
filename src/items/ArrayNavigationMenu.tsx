@@ -1,8 +1,8 @@
-const navigationMenu = [{sectionName: "УСІ ПУБЛІКАЦІЇ", link: "#", idItem: 7},
-    {sectionName: "ЕКСКЛЮЗИВ СН", link: "#", idItem: 8},
-    {sectionName: "УКРАЇНА", link: "#", idItem: 9},
-    {sectionName: "ПОЛІТИКА", link: "#", idItem: 10},
-    {sectionName: "ВІЙНА", link: "#", idItem: 11},
-    {sectionName: "ГЛАМУР", link: "#", idItem: 12},
+const navigationMenu = [{sectionName: "УСІ ПУБЛІКАЦІЇ", link: "#"},
+    {sectionName: "ЕКСКЛЮЗИВ СН", link: "#"},
+    {sectionName: "УКРАЇНА", link: "#"},
+    {sectionName: "ПОЛІТИКА", link: "#"},
+    {sectionName: "ВІЙНА", link: "#"},
+    {sectionName: "ГЛАМУР", link: "#"},
 ];
 export default navigationMenu;
