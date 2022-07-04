@@ -4,7 +4,7 @@ import {makeStyles} from "@mui/styles";
 import axios, {AxiosResponse} from "axios";
 import {CurrencyRateType} from "../../types/CurrencyRateType";
 import {colors} from "../theme/colors";
-import {MenuItem, OutlinedInput, TextField} from "@mui/material";
+import {Button, FormControlLabel, MenuItem, OutlinedInput, Radio, RadioGroup, TextField} from "@mui/material";
 
 const useStyles = makeStyles({
     currencyConverter: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     },
     outlinedInput: {
         margin: "0 20px 0 0",
-        backgroundColor: colors.blues[1],
+        backgroundColor: colors.white[0],
     },
     conversionResult: {
         display: "flex",
@@ -33,10 +33,15 @@ const useStyles = makeStyles({
         margin: "20px 0 0 0",
     },
     titleResult: {
-        padding: "0 0 5px 0"
+        padding: "0 0 5px 0",
+        margin: "20px 0",
     },
     result: {
-      fontSize: "20px"
+        fontSize: "20px",
+    },
+    buttonConvert: {
+        backgroundColor: colors.blues[2],
+        margin: "20px 0",
     },
 });
 
@@ -44,8 +49,9 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const classes = useStyles();
 
     const [rates, setRates] = useState<CurrencyRateType[]>([])
-    const [currency, setCurrency] = React.useState<string>("");
-    const [amount, setAmount] = React.useState<string>("");
+    const [currency, setCurrency] = useState<string>("");
+    const [amount, setAmount] = useState<string>("");
+    const [output, setOutput] = useState<any>("");
 
     const handleAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAmount(event.target.value);
@@ -60,6 +66,10 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                 setRates(response.data);
             });
     }, []);
+
+    const showResult = () => {
+        setOutput(Number(amount))
+    };
 
     return (
         <div className={classes.currencyConverter}>
@@ -87,13 +97,22 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        <RadioGroup
+                            // value={value}
+                            // onChange={handleChange}
+                        >
+                            <FormControlLabel value="Buy" control={<Radio/>} label="Buy"/>
+                            <FormControlLabel value="Sell" control={<Radio/>} label="Sell"/>
+                        </RadioGroup>
                     </div>
                     <div className={classes.conversionResult}>
+                        <Button onClick={showResult} variant="contained">Convert</Button>
                         <h2 className={classes.titleResult}>Converted Amount:</h2>
                         {rates.filter(rate => rate.ccy === currency)
                             .map((rate: CurrencyRateType, index: number) => (
                                 <p key={index} className={classes.result}>
-                                    {amount + " " + currency + " = " + (rate.sale * Number(amount)).toFixed(2) + " " + rate.base_ccy}
+                                    {output}
+                                    {/*{amount + " " + currency + " = " + (rate.sale * Number(amount)).toFixed(2) + " " + rate.base_ccy}*/}
                                 </p>))}
                     </div>
                 </div>
