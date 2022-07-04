@@ -1,8 +1,12 @@
 export const colors = {
     blues: [
         "#308FFF",
+        "#8aa7d5",
     ],
-    black: [
+    blacks: [
         "#000000"
+    ],
+    green: [
+        "#2c702c"
     ]
 }

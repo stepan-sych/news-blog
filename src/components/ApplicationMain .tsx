@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     },
 });
 
-const ApplicationStructure = () => {
+const ApplicationMain = () => {
     const classes = useStyles();
     return (
         <div className={classes.wrapper}>
@@ -58,4 +58,4 @@ const ApplicationStructure = () => {
     );
 };
 
-export default ApplicationStructure;
+export default ApplicationMain;
