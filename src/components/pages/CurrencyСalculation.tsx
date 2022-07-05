@@ -51,13 +51,18 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const [rates, setRates] = useState<CurrencyRateType[]>([])
     const [currency, setCurrency] = useState<string>("");
     const [amount, setAmount] = useState<string>("");
-    const [output, setOutput] = useState<any>("");
+    const [output, setOutput] = useState<number | undefined>(undefined);
+    const [valueRadio, setValueRadio] = React.useState<string>("");
+    const [disableButton, setDisableButton] = React.useState<boolean>(true);
 
     const handleAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAmount(event.target.value);
     };
     const handleCurrency = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCurrency(event.target.value);
+    };
+    const handleRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValueRadio((event.target as HTMLInputElement).value);
     };
 
     useEffect(() => {
@@ -67,10 +72,18 @@ export const CurrencyCalculation: FC = (): ReactElement => {
             });
     }, []);
 
-    const showResult = () => {
-        setOutput(Number(amount))
-    };
 
+    const showResult = () => {
+        if (valueRadio === "Buy") {
+            rates.filter(rate => rate.ccy === currency)
+                .map((rate: CurrencyRateType) =>
+                    setOutput(rate.sale * Number(amount)))
+        } else {
+            rates.filter(rate => rate.ccy === currency)
+                .map((rate: CurrencyRateType) =>
+                    setOutput(rate.buy * Number(amount)))
+        }
+    };
     return (
         <div className={classes.currencyConverter}>
             <Link to={'*'}>
@@ -98,21 +111,20 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                             ))}
                         </TextField>
                         <RadioGroup
-                            // value={value}
-                            // onChange={handleChange}
+                            value={valueRadio}
+                            onChange={handleRadio}
                         >
-                            <FormControlLabel value="Buy" control={<Radio/>} label="Buy"/>
-                            <FormControlLabel value="Sell" control={<Radio/>} label="Sell"/>
+                            <FormControlLabel onClick={() => setDisableButton(false)} value="Buy" control={<Radio/>} label="Buy"/>
+                            <FormControlLabel onClick={() => setDisableButton(false)} value="Sell" control={<Radio/>} label="Sell"/>
                         </RadioGroup>
                     </div>
                     <div className={classes.conversionResult}>
-                        <Button onClick={showResult} variant="contained">Convert</Button>
+                        <Button disabled={disableButton} onClick={showResult} variant="contained">Convert</Button>
                         <h2 className={classes.titleResult}>Converted Amount:</h2>
                         {rates.filter(rate => rate.ccy === currency)
                             .map((rate: CurrencyRateType, index: number) => (
                                 <p key={index} className={classes.result}>
-                                    {output}
-                                    {/*{amount + " " + currency + " = " + (rate.sale * Number(amount)).toFixed(2) + " " + rate.base_ccy}*/}
+                                    {amount + " " + currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
                                 </p>))}
                     </div>
                 </div>
