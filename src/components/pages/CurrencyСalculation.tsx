@@ -83,7 +83,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     };
     return (
         <div className={classes.currencyConverter}>
-            <Link to={'*'}>
+            <Link to={'/*'}>
                 <button className={classes.goHome}>Go home</button>
             </Link>
             <form className={classes.currencyForm}>
@@ -101,9 +101,9 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                             value={values.currency}
                             onChange={handleChange("currency")}
                         >
-                            {rates.map((option: CurrencyRateType, index: number) => (
-                                <MenuItem key={index} value={option.ccy}>
-                                    {option.ccy}
+                            {rates.map((currencyName: CurrencyRateType, index: number) => (
+                                <MenuItem key={index} value={currencyName.ccy}>
+                                    {currencyName.ccy}
                                 </MenuItem>
                             ))}
                         </TextField>
