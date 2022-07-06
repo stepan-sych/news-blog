@@ -8,14 +8,14 @@ import {Button, FormControlLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Te
 
 const useStyles = makeStyles({
     currencyConverter: {
-        backgroundColor: colors.blues[1],
+        backgroundColor: colors.blues[1].backgroundColor,
         minHeight: "100vh",
         padding: "20px",
     },
     goHome: {
         width: "100px",
         height: "50px",
-        backgroundColor: colors.blues[0],
+        backgroundColor: colors.blues[0].goHomeButton,
     },
     currencyForm: {
         display: "flex",
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     },
     outlinedInput: {
         margin: "0 20px 0 0",
-        backgroundColor: colors.white[0],
+        backgroundColor: colors.white[0].inputField,
     },
     conversionResult: {
         display: "flex",
@@ -40,7 +40,6 @@ const useStyles = makeStyles({
         fontSize: "20px",
     },
     buttonConvert: {
-        backgroundColor: colors.blues[2],
         margin: "20px 0",
     },
 });
@@ -48,22 +47,45 @@ const useStyles = makeStyles({
 export const CurrencyCalculation: FC = (): ReactElement => {
     const classes = useStyles();
 
-    const [rates, setRates] = useState<CurrencyRateType[]>([])
-    const [currency, setCurrency] = useState<string>("");
-    const [amount, setAmount] = useState<string>("");
-    const [output, setOutput] = useState<number | undefined>(undefined);
-    const [valueRadio, setValueRadio] = React.useState<string>("");
-    const [disableButton, setDisableButton] = React.useState<boolean>(true);
+    type State = {
+        amount: string;
+        rates: CurrencyRateType[];
+        currency: string;
+        output: number | undefined;
+        valueRadio: string;
+        disableButton: boolean;
+    }
 
-    const handleAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAmount(event.target.value);
-    };
-    const handleCurrency = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrency(event.target.value);
-    };
-    const handleRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValueRadio((event.target as HTMLInputElement).value);
-    };
+    const [values, setValues] = React.useState<State>({
+        rates: [],
+        amount: "",
+        currency: "",
+        output: undefined,
+        valueRadio: "",
+        disableButton: true,
+    });
+
+    const handleChange =
+        (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            setValues({ ...values, [prop]: event.target.value });
+        };
+
+    const [rates, setRates] = useState<CurrencyRateType[]>([])
+    // const [currency, setCurrency] = useState<string>("");
+    // const [amount, setAmount] = useState<string>("");
+    const [output, setOutput] = useState<number | undefined>(undefined);
+    // const [valueRadio, setValueRadio] = useState<string>("");
+    const [disableButton, setDisableButton] = useState<boolean>(true);
+
+    // const handleAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setAmount(event.target.value);
+    // };
+    // const handleCurrency = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setCurrency(event.target.value);
+    // };
+    // const handleRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setValueRadio((event.target as HTMLInputElement).value);
+    // };
 
     useEffect(() => {
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
@@ -74,14 +96,14 @@ export const CurrencyCalculation: FC = (): ReactElement => {
 
 
     const showResult = () => {
-        if (valueRadio === "Buy") {
-            rates.filter(rate => rate.ccy === currency)
+        if (values.valueRadio === "Buy") {
+            rates.filter(rate => rate.ccy === values.currency)
                 .map((rate: CurrencyRateType) =>
-                    setOutput(rate.sale * Number(amount)))
+                    setOutput(rate.sale * Number(values.amount)))
         } else {
-            rates.filter(rate => rate.ccy === currency)
+            rates.filter(rate => rate.ccy === values.currency)
                 .map((rate: CurrencyRateType) =>
-                    setOutput(rate.buy * Number(amount)))
+                    setOutput(rate.buy * Number(values.amount)))
         }
     };
     return (
@@ -95,14 +117,14 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                         <OutlinedInput
                             className={classes.outlinedInput}
                             id="outlined-adornment-amount"
-                            value={amount}
-                            onChange={handleAmount}
+                            value={values.amount}
+                            onChange={handleChange("amount")}
                         />
                         <TextField
                             id="outlined-select-currency"
                             select
-                            value={currency}
-                            onChange={handleCurrency}
+                            value={values.currency}
+                            onChange={handleChange("currency")}
                         >
                             {rates.map((option: CurrencyRateType, index: number) => (
                                 <MenuItem key={index} value={option.ccy}>
@@ -111,20 +133,25 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                             ))}
                         </TextField>
                         <RadioGroup
-                            value={valueRadio}
-                            onChange={handleRadio}
+                            value={values.valueRadio}
+                            onChange={handleChange("valueRadio")}
                         >
-                            <FormControlLabel onClick={() => setDisableButton(false)} value="Buy" control={<Radio/>} label="Buy"/>
-                            <FormControlLabel onClick={() => setDisableButton(false)} value="Sell" control={<Radio/>} label="Sell"/>
+                            <FormControlLabel onClick={() => setDisableButton(false)} value="Buy" control={<Radio/>}
+                                              label="Buy"/>
+                            <FormControlLabel onClick={() => setDisableButton(false)} value="Sell" control={<Radio/>}
+                                              label="Sell"/>
                         </RadioGroup>
                     </div>
                     <div className={classes.conversionResult}>
-                        <Button disabled={disableButton} onClick={showResult} variant="contained">Convert</Button>
+                        <Button style={{backgroundColor: colors.blues[2].convertButton}}
+                                disabled={disableButton}
+                                onClick={showResult}
+                                variant="contained">Convert</Button>
                         <h2 className={classes.titleResult}>Converted Amount:</h2>
-                        {rates.filter(rate => rate.ccy === currency)
+                        {rates.filter(rate => rate.ccy === values.currency)
                             .map((rate: CurrencyRateType, index: number) => (
                                 <p key={index} className={classes.result}>
-                                    {amount + " " + currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
+                                    {values.amount + " " + values.currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
                                 </p>))}
                     </div>
                 </div>
