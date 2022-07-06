@@ -10,14 +10,14 @@ import {CurrencyState} from "../../types/CurrencyStateType";
 const useStyles = makeStyles({
     currencyConverter: {
         fontFamily: "sans-serif",
-        mat: colors.blues.mat,
+        backgroundColor: colors.blues.mat,
         minHeight: "100vh",
         padding: "20px",
     },
     goHome: {
         width: "100px",
         height: "50px",
-        mat: colors.blues.light,
+        backgroundColor: colors.blues.light,
     },
     currencyForm: {
         display: "flex",
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     },
     outlinedInput: {
         margin: "0 20px 0 0",
-        mat: colors.white.dark,
+        backgroundColor: colors.white.dark,
     },
     conversionResult: {
         display: "flex",
