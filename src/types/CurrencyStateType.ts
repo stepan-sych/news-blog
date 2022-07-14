@@ -1,5 +1,5 @@
-export  type CurrencyState = {
+export  type CurrencyStateTypes = {
     amount: string;
-    currency: string;
+    currency: string | undefined;
     valueRadio: string;
 }

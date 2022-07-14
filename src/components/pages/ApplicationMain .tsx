@@ -1,6 +1,5 @@
 import React from 'react';
 import CurrentDate from "../header_components/CurrentDate";
-import {Link} from "react-router-dom";
 import {CurrencyRate} from "../api/CurrencyRate";
 import {WiCelsius, WiCloudRefresh} from "react-icons/wi";
 import SocialIcons from "../header_components/SocialIcons";
@@ -18,6 +17,7 @@ const useStyles = makeStyles({
 });
 
 export const ApplicationMain = () => {
+
     const classes = useStyles();
     return (
         <div className={classes.wrapper}>
@@ -25,7 +25,7 @@ export const ApplicationMain = () => {
                 <header className="Header">
                     <div className="Header-items">
                         <CurrentDate/>
-                        <Link to={'/currency'}><CurrencyRate/></Link>
+                       <CurrencyRate/>
                         <div className="Weather">
                             <WiCloudRefresh/>
                             <div className="Value">+17</div>

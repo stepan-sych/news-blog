@@ -1,11 +1,11 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {makeStyles} from "@mui/styles";
 import axios, {AxiosResponse} from "axios";
 import {CurrencyRateType} from "../../types/CurrencyRateType";
 import {colors} from "../theme/colors";
 import {Button, FormControlLabel, MenuItem, OutlinedInput, Radio, RadioGroup, TextField} from "@mui/material";
-import {CurrencyState} from "../../types/CurrencyStateType";
+import {CurrencyStateTypes} from "../../types/CurrencyStateType";
 
 const useStyles = makeStyles({
     currencyConverter: {
@@ -47,21 +47,25 @@ const useStyles = makeStyles({
 });
 
 export const CurrencyCalculation: FC = (): ReactElement => {
+
+    const param = useParams();
     const classes = useStyles();
 
     const [rates, setRates] = useState<CurrencyRateType[]>([])
     const [output, setOutput] = useState<number | undefined>(undefined);
     const [disableButton, setDisableButton] = useState<boolean>(true);
-    const [values, setValues] = useState<CurrencyState>({
+    const [values, setValues] = useState<CurrencyStateTypes>({
         amount: "",
-        currency: "",
+        currency: param.id,
         valueRadio: "",
     });
 
     const handleChange =
-        (prop: keyof CurrencyState) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            setValues({ ...values, [prop]: event.target.value });
+        (prop: keyof CurrencyStateTypes) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            setValues({...values, [prop]: event.target.value});
         };
+    console.log(values)
+    console.log(param)
 
     useEffect(() => {
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
@@ -70,7 +74,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
             });
     }, []);
 
-    const showResult = () => {
+    const showResult = (): void => {
         if (values.valueRadio === "Buy") {
             rates.filter(rate => rate.ccy === values.currency)
                 .map((rate: CurrencyRateType) =>
@@ -81,22 +85,22 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                     setOutput(rate.buy * Number(values.amount)))
         }
     };
+
     return (
         <div className={classes.currencyConverter}>
             <Link to={'/*'}>
                 <button className={classes.goHome}>Go home</button>
+
             </Link>
             <form className={classes.currencyForm}>
                 <div>
                     <div>
                         <OutlinedInput
                             className={classes.outlinedInput}
-                            id="outlined-adornment-amount"
                             value={values.amount}
                             onChange={handleChange("amount")}
                         />
                         <TextField
-                            id="outlined-select-currency"
                             select
                             value={values.currency}
                             onChange={handleChange("currency")}

@@ -9,8 +9,8 @@ const App = () => {
     return (
         <div className="App">
             <Routes>
-                <Route path={'/currency'} element={<CurrencyCalculation/>}></Route>
-                <Route path={'/*'} element={<ApplicationMain/>}></Route>
+                <Route path={"/currency/:id"} element={<CurrencyCalculation/>}></Route>
+                <Route path={"/*"} element={<ApplicationMain/>}></Route>
             </Routes>
         </div>
     );
