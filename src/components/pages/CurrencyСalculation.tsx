@@ -64,8 +64,6 @@ export const CurrencyCalculation: FC = (): ReactElement => {
         (prop: keyof CurrencyStateTypes) => (event: React.ChangeEvent<HTMLInputElement>) => {
             setValues({...values, [prop]: event.target.value});
         };
-    console.log(values)
-    console.log(param)
 
     useEffect(() => {
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
