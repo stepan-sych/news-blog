@@ -7,4 +7,7 @@ export const colors = {
         mat: "#8aa7d5",
         veryDark: "rgba(23,28,37,0.5)",
     },
+    green: {
+      dark: "rgba(2,206,70,0.5)"
+    },
 }
