@@ -4,7 +4,7 @@ import {makeStyles} from "@mui/styles";
 import axios, {AxiosResponse} from "axios";
 import {CurrencyRateType} from "../../types/CurrencyRateType";
 import {colors} from "../theme/colors";
-import {Button, FormControlLabel, MenuItem, OutlinedInput, Radio, RadioGroup, TextField} from "@mui/material";
+import {Button, FormControlLabel, MenuItem, Radio, RadioGroup, TextField} from "@mui/material";
 import {CurrencyStateTypes} from "../../types/CurrencyStateType";
 
 const useStyles = makeStyles({
@@ -23,10 +23,6 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
-    },
-    outlinedInput: {
-        margin: "0 20px 0 0",
-        backgroundColor: colors.white.dark,
     },
     conversionResult: {
         display: "flex",
@@ -53,17 +49,29 @@ export const CurrencyCalculation: FC = (): ReactElement => {
 
     const [rates, setRates] = useState<CurrencyRateType[]>([])
     const [output, setOutput] = useState<number | undefined>(undefined);
+    const [amount, setAmount] = useState<string >("");
+    const [helperText, setHelperText] = useState<string | undefined >(undefined);
     const [disableButton, setDisableButton] = useState<boolean>(true);
+    const [errorText, setErrorText] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
-        amount: "",
         currency: param.id,
         valueRadio: "",
     });
 
-    const handleChange =
+    const handleChangeConverter =
         (prop: keyof CurrencyStateTypes) => (event: React.ChangeEvent<HTMLInputElement>) => {
             setValues({...values, [prop]: event.target.value});
         };
+
+    const onChange = (event: any) => {
+        if (event.target.value.match(/^[\d\b]*$/)) {
+            setErrorText(false);
+            setAmount(event.target.value);
+        } else {
+            setErrorText(true);
+            setHelperText("The field must contain a number!")
+        }
+    };
 
     useEffect(() => {
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
@@ -76,11 +84,11 @@ export const CurrencyCalculation: FC = (): ReactElement => {
         if (values.valueRadio === "Buy") {
             rates.filter(rate => rate.ccy === values.currency)
                 .map((rate: CurrencyRateType) =>
-                    setOutput(rate.sale * Number(values.amount)))
+                    setOutput(rate.sale * Number(amount)))
         } else {
             rates.filter(rate => rate.ccy === values.currency)
                 .map((rate: CurrencyRateType) =>
-                    setOutput(rate.buy * Number(values.amount)))
+                    setOutput(rate.buy * Number(amount)))
         }
     };
 
@@ -88,20 +96,22 @@ export const CurrencyCalculation: FC = (): ReactElement => {
         <div className={classes.currencyConverter}>
             <Link to={'/*'}>
                 <button className={classes.goHome}>Go home</button>
-
             </Link>
             <form className={classes.currencyForm}>
                 <div>
                     <div>
-                        <OutlinedInput
-                            className={classes.outlinedInput}
-                            value={values.amount}
-                            onChange={handleChange("amount")}
+                        <TextField
+                            style={{margin: "0 20px 0 0", backgroundColor: colors.white.dark, borderRadius: "4px"}}
+                            variant="outlined"
+                            value={amount}
+                            error={errorText}
+                            helperText={errorText?helperText:undefined}
+                            onChange={onChange}
                         />
                         <TextField
                             select
                             value={values.currency}
-                            onChange={handleChange("currency")}
+                            onChange={handleChangeConverter("currency")}
                         >
                             {rates.map((currencyName: CurrencyRateType, index: number) => (
                                 <MenuItem key={index} value={currencyName.ccy}>
@@ -111,7 +121,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                         </TextField>
                         <RadioGroup
                             value={values.valueRadio}
-                            onChange={handleChange("valueRadio")}
+                            onChange={handleChangeConverter("valueRadio")}
                         >
                             <FormControlLabel onClick={() => setDisableButton(false)} value="Buy" control={<Radio/>}
                                               label="Buy"/>
@@ -128,7 +138,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                         {rates.filter(rate => rate.ccy === values.currency)
                             .map((rate: CurrencyRateType, index: number) => (
                                 <p key={index} className={classes.result}>
-                                    {values.amount + " " + values.currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
+                                    {amount + " " + values.currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
                                 </p>))}
                     </div>
                 </div>
