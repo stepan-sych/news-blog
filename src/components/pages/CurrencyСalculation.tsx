@@ -86,11 +86,11 @@ export const CurrencyCalculation: FC = (): ReactElement => {
 
     const showResult = (): void => {
         if (values.valueRadio === "Buy") {
-            rates.filter(rate => rate.ccy === values.currency)
+            rates.filter((rate: CurrencyRateType) => rate.ccy === values.currency)
                 .map((rate: CurrencyRateType) =>
                     setOutput(rate.sale * Number(amount)))
         } else {
-            rates.filter(rate => rate.ccy === values.currency)
+            rates.filter((rate: CurrencyRateType) => rate.ccy === values.currency)
                 .map((rate: CurrencyRateType) =>
                     setOutput(rate.buy * Number(amount)))
         }
@@ -139,7 +139,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                                 onClick={showResult}
                                 variant="contained">Convert</Button>
                         <h2 className={classes.titleResult}>Converted Amount:</h2>
-                        {rates.filter(rate => rate.ccy === values.currency)
+                        {rates.filter((rate: CurrencyRateType) => rate.ccy === values.currency)
                             .map((rate: CurrencyRateType, index: number) => (
                                 <p key={index} className={classes.result}>
                                     {amount + " " + values.currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
