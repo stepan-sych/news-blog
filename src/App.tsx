@@ -12,7 +12,7 @@ const App = () => {
     return (
         <div className="App">
             <Routes>
-                <Route path={`${currencyConverter}/:id`} element={<CurrencyCalculation/>}></Route>
+                <Route path={`${currencyConverter}/:select`} element={<CurrencyCalculation/>}></Route>
                 <Route path={`${mainPage}`} element={<ApplicationMain/>}></Route>
             </Routes>
         </div>

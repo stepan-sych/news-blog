@@ -9,8 +9,8 @@ export const CurrencyRate: FC = (): ReactElement => {
     const [rateValues, setRateValues] = useState<CurrencyRateType[]>([]);
 
     const navigate = useNavigate();
-    const openConverter = (id: CurrencyName): void => {
-        navigate(`/currency/${id}`)
+    const openConverter = (select: CurrencyName): void => {
+        navigate(`/currency/${select}`)
     }
 
     const mapIcons: Map<CurrencyName, ReactElement> = new Map<CurrencyName, ReactElement>([

@@ -58,7 +58,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const [disableButton, setDisableButton] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
-        currency: param.id,
+        currency: param.select,
         valueRadio: "",
     });
 
