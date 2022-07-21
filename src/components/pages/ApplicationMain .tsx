@@ -25,7 +25,7 @@ export const ApplicationMain = () => {
                 <header className="Header">
                     <div className="Header-items">
                         <CurrentDate/>
-                       <CurrencyRate/>
+                        <CurrencyRate/>
                         <div className="Weather">
                             <WiCloudRefresh/>
                             <div className="Value">+17</div>
