@@ -1,5 +1,6 @@
 import React from 'react';
-import "./App.scss"
+// import "./App.scss"
+import "appStyle.css";
 import {Route, Routes} from "react-router-dom";
 import {CurrencyCalculation} from "./components/pages/CurrencyСalculation";
 import {ApplicationMain} from "./components/pages/ApplicationMain ";
