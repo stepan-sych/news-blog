@@ -105,7 +105,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                 <div>
                     <div>
                         <TextField
-                            style={{margin: "0 20px 0 0", backgroundColor: colors.white.dark, borderRadius: "4px"}}
+                            style={{margin: "0 20px 30px 0", backgroundColor: colors.white.dark, borderRadius: "4px"}}
                             variant="outlined"
                             value={amount}
                             error={errorText}
