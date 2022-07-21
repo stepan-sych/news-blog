@@ -70,22 +70,36 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
 }
 
-
 body {
     font-family: "Roboto Light", sans-serif;
     color: rgba(0, 0, 0, 0.88);
-    .Container {
-        padding: 0 20px;
-        .Header {
-            display: flex;
-            justify-content: space-between;
-        }
-    }
 }
 
+.Container {
+    padding: 0 20px;
+}
 
+.Header {
+    display: flex;
+    justify-content: space-between;
+}
 
+.Header-social-icons {
+    display: flex;
+    justify-content: flex-end;
 
+}
+
+.Icon {
+    color: #726c6c;
+    padding: 9px 6px;
+    width: 44px;
+    height: 36px;
+}
+
+a:hover {
+    color: white;
+}
 
 .Header-items {
     display: flex;
@@ -105,22 +119,6 @@ body {
     color: rgba(0, 0, 0, 0.88);
 }
 
-.Header-social-icons {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.Icon {
-    color: #726c6c;
-    padding: 9px 6px;
-    width: 44px;
-    height: 36px;
-}
-
-a:hover {
-    color: white;
-}
-
 .Currency:hover {
     color: white;
 }
@@ -134,6 +132,11 @@ a:hover {
 .Weather .Value {
     font-size: 18px;
     align-self: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
 }
 
 .List-menu {
