@@ -5,6 +5,7 @@ import axios, {AxiosResponse} from "axios";
 import {CurrencyRateType} from "../../types/CurrencyRateType";
 import {colors} from "../theme/colors";
 import {Button, FormControlLabel, MenuItem, Radio, RadioGroup, TextField} from "@mui/material";
+import {CurrencyName} from "../enums/CurrencyName";
 
 const useStyles = makeStyles({
     currencyConverter: {
@@ -47,7 +48,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const classes = useStyles();
 
     type CurrencyStateTypes = {
-        currency: string | undefined;
+        currency: CurrencyName | undefined;
         valueRadio: string;
     }
 
@@ -58,7 +59,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const [disableButton, setDisableButton] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
-        currency: param.select,
+        currency: param.select as CurrencyName,
         valueRadio: "",
     });
 
