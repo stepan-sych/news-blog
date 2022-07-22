@@ -5,7 +5,7 @@ import axios, {AxiosResponse} from "axios";
 import {CurrencyRateType} from "../../types/CurrencyRateType";
 import {colors} from "../theme/colors";
 import {Button, FormControlLabel, MenuItem, Radio, RadioGroup, TextField} from "@mui/material";
-import {CurrencyName} from "../enums/CurrencyName";
+import {mainPage} from "../../constants/PathConstants";
 
 const useStyles = makeStyles({
     currencyConverter: {
@@ -48,20 +48,24 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const classes = useStyles();
 
     type CurrencyStateTypes = {
-        currency: CurrencyName | undefined;
+        currency: string | undefined;
         valueRadio: string;
     }
 
     const [rates, setRates] = useState<CurrencyRateType[]>([])
     const [output, setOutput] = useState<number | undefined>(undefined);
-    const [amount, setAmount] = useState<string >("");
-    const [helperText, setHelperText] = useState<string | undefined >(undefined);
+    const [amount, setAmount] = useState<string>("");
+    const [helperText, setHelperText] = useState<string | undefined>(undefined);
     const [disableButton, setDisableButton] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
-        currency: param.select as CurrencyName,
+        currency: "",
         valueRadio: "",
     });
+
+    useEffect(() => {
+        values.currency = param.select;
+    },)
 
     const handleChangeConverter =
         (prop: keyof CurrencyStateTypes) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +103,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
 
     return (
         <div className={classes.currencyConverter}>
-            <Link to={'/*'}>
+            <Link to={`${mainPage}`}>
                 <button className={classes.goHome}>Go home</button>
             </Link>
             <form className={classes.currencyForm}>
