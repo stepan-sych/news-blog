@@ -6,6 +6,7 @@ import {CurrencyRateType} from "../../types/CurrencyRateType";
 import {colors} from "../theme/colors";
 import {Button, FormControlLabel, MenuItem, Radio, RadioGroup, TextField} from "@mui/material";
 import {mainPage} from "../../constants/PathConstants";
+import {CurrencyName} from "../enums/CurrencyName";
 
 const useStyles = makeStyles({
     currencyConverter: {
@@ -48,8 +49,8 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const classes = useStyles();
 
     type CurrencyStateTypes = {
-        currency: string | undefined;
-        valueRadio: string;
+        currency: CurrencyName | undefined;
+        valueRadio: "Buy" | "Sell" | null;
     }
 
     const [rates, setRates] = useState<CurrencyRateType[]>([])
@@ -59,13 +60,13 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const [disableButton, setDisableButton] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
-        currency: "",
-        valueRadio: "",
+        currency: "" as CurrencyName,
+        valueRadio: null,
     });
 
     useEffect(() => {
-        values.currency = param.select;
-    },)
+        values.currency = param.select as CurrencyName;
+    },[])
 
     const handleChangeConverter =
         (prop: keyof CurrencyStateTypes) => (event: React.ChangeEvent<HTMLInputElement>) => {
