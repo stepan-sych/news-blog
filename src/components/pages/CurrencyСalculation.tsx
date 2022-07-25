@@ -48,13 +48,18 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const param = useParams();
     const classes = useStyles();
 
+    enum RadioButtons {
+        Buy = "Buy",
+        Sell = "Sell",
+    }
+
     type CurrencyStateTypes = {
         currency: CurrencyName | undefined;
-        valueRadio: "Buy" | "Sell" | null;
+        valueRadio: RadioButtons | null;
     }
 
     const [rates, setRates] = useState<CurrencyRateType[]>([])
-    const [output, setOutput] = useState<number | undefined>(undefined);
+    const [output, setOutput] = useState<number | null>(null);
     const [amount, setAmount] = useState<string>("");
     const [helperText, setHelperText] = useState<string | undefined>(undefined);
     const [disableButton, setDisableButton] = useState<boolean>(true);
@@ -73,7 +78,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
             setValues({...values, [prop]: event.target.value});
         };
 
-    const onChange = (event: any) => {
+    const handleError = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.value.match(/^[\d\b]*$/)) {
             setErrorText(false);
             setAmount(event.target.value);
@@ -87,18 +92,19 @@ export const CurrencyCalculation: FC = (): ReactElement => {
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
             .then((response: AxiosResponse<CurrencyRateType[]>) => {
                 setRates(response.data);
+                console.log(response.data);
             });
     }, []);
 
     const showResult = (): void => {
-        if (values.valueRadio === "Buy") {
-            rates.filter((rate: CurrencyRateType) => rate.ccy === values.currency)
-                .map((rate: CurrencyRateType) =>
-                    setOutput(rate.sale * Number(amount)))
-        } else {
-            rates.filter((rate: CurrencyRateType) => rate.ccy === values.currency)
-                .map((rate: CurrencyRateType) =>
-                    setOutput(rate.buy * Number(amount)))
+        const radioButtonCondition: CurrencyRateType | undefined = rates.find((rate: CurrencyRateType) => rate.ccy === values.currency)
+        if (radioButtonCondition) {
+            if (!values.valueRadio) return
+            if (values.valueRadio === RadioButtons.Buy) {
+                setOutput(radioButtonCondition.sale * Number(amount))
+            } else if (values.valueRadio === RadioButtons.Sell) {
+                setOutput(radioButtonCondition.buy * Number(amount))
+            }
         }
     };
 
@@ -115,8 +121,8 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                             variant="outlined"
                             value={amount}
                             error={errorText}
-                            helperText={errorText?helperText:undefined}
-                            onChange={onChange}
+                            helperText={errorText ? helperText : undefined}
+                            onChange={handleError}
                         />
                         <TextField
                             select
@@ -133,10 +139,12 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                             value={values.valueRadio}
                             onChange={handleChangeConverter("valueRadio")}
                         >
-                            <FormControlLabel onClick={() => setDisableButton(false)} value="Buy" control={<Radio/>}
-                                              label="Buy"/>
-                            <FormControlLabel onClick={() => setDisableButton(false)} value="Sell" control={<Radio/>}
-                                              label="Sell"/>
+                            <FormControlLabel onClick={() => setDisableButton(false)} value={RadioButtons.Buy}
+                                              control={<Radio/>}
+                                              label={RadioButtons.Buy}/>
+                            <FormControlLabel onClick={() => setDisableButton(false)} value={RadioButtons.Sell}
+                                              control={<Radio/>}
+                                              label={RadioButtons.Sell}/>
                         </RadioGroup>
                     </div>
                     <div className={classes.conversionResult}>
