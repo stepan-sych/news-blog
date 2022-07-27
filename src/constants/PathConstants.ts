@@ -1,2 +1,3 @@
+export const mainPage: string = "/";
 export const currencyConverter: string = "/currency/";
-export const mainPage: string = "/*";
+export const errorPage: string = "*";

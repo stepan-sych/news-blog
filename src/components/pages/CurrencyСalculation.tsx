@@ -62,8 +62,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const [output, setOutput] = useState<number | null>(null);
     const [amount, setAmount] = useState<string>("");
     const [helperText, setHelperText] = useState<string | undefined>(undefined);
-    const [disableButton, setDisableButton] = useState<boolean>(true);
-    const [errorText, setErrorText] = useState<boolean>(false);
+    const [errorValidation, setErrorValidation] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
         currency: "" as CurrencyName,
         valueRadio: null,
@@ -71,7 +70,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
 
     useEffect(() => {
         values.currency = param.select as CurrencyName;
-    },[])
+    }, [])
 
     const handleChangeConverter =
         (prop: keyof CurrencyStateTypes) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,10 +79,10 @@ export const CurrencyCalculation: FC = (): ReactElement => {
 
     const handleError = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.value.match(/^[\d\b]*$/)) {
-            setErrorText(false);
+            setErrorValidation(false);
             setAmount(event.target.value);
         } else {
-            setErrorText(true);
+            setErrorValidation(true);
             setHelperText("The field must contain a number!")
         }
     };
@@ -97,7 +96,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     }, []);
 
     const showResult = (): void => {
-        const radioButtonCondition: CurrencyRateType | undefined = rates.find((rate: CurrencyRateType) => rate.ccy === values.currency)
+        let radioButtonCondition: CurrencyRateType | undefined = rates.find((rate: CurrencyRateType) => rate.ccy === values.currency)
         if (radioButtonCondition) {
             if (!values.valueRadio) return
             if (values.valueRadio === RadioButtons.Buy) {
@@ -120,8 +119,8 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                             style={{margin: "0 20px 30px 0", backgroundColor: colors.white.dark, borderRadius: "4px"}}
                             variant="outlined"
                             value={amount}
-                            error={errorText}
-                            helperText={errorText ? helperText : undefined}
+                            error={errorValidation}
+                            helperText={errorValidation ? helperText : undefined}
                             onChange={handleError}
                         />
                         <TextField
@@ -139,17 +138,13 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                             value={values.valueRadio}
                             onChange={handleChangeConverter("valueRadio")}
                         >
-                            <FormControlLabel onClick={() => setDisableButton(false)} value={RadioButtons.Buy}
-                                              control={<Radio/>}
-                                              label={RadioButtons.Buy}/>
-                            <FormControlLabel onClick={() => setDisableButton(false)} value={RadioButtons.Sell}
-                                              control={<Radio/>}
-                                              label={RadioButtons.Sell}/>
+                            <FormControlLabel value={RadioButtons.Buy} control={<Radio/>} label={RadioButtons.Buy}/>
+                            <FormControlLabel value={RadioButtons.Sell} control={<Radio/>} label={RadioButtons.Sell}/>
                         </RadioGroup>
                     </div>
                     <div className={classes.conversionResult}>
                         <Button style={{backgroundColor: colors.blues.veryDark}}
-                                disabled={disableButton}
+                                disabled={!amount || !values.valueRadio}
                                 onClick={showResult}
                                 variant="contained">Convert</Button>
                         <h2 className={classes.titleResult}>Converted Amount:</h2>
