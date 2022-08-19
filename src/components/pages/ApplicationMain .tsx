@@ -25,7 +25,7 @@ export const ApplicationMain = () => {
                 <header className="Header">
                     <div className="Header-items">
                         <CurrentDate/>
-                       <CurrencyRate/>
+                        <CurrencyRate/>
                         <div className="Weather">
                             <WiCloudRefresh/>
                             <div className="Value">+17</div>
@@ -47,7 +47,7 @@ export const ApplicationMain = () => {
                     </div>
                 </nav>
                 <div className="Logo-title">
-                    <img src="/public/mainLogo.svg" alt=""/>
+                    <img src="/mainLogo.svg" alt=""/>
                     <h2>ЗАГОЛОВОК ГОЛОВНОЇ НОВИНИ ДНЯ!</h2>
                 </div>
                 <MainArticles/>
