@@ -201,24 +201,3 @@ h2 {
 .Border {
     border-right: #726c6c 2px solid;
 }
-
-.Average-salary {
-    width: 100%;
-    max-height: 150px;
-    background-color: #b70e0e;
-    padding: 0 20px;
-    font-size: 20px;
-}
-
-.Box-salary {
-    display: flex;
-    justify-content: space-between;
-}
-
-.Average-salary h3 {
-    padding: 10px 0;
-}
-
-.Salary {
-    padding: 0 20px 20px 0;
-}
