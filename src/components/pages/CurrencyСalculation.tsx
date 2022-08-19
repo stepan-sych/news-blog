@@ -91,7 +91,6 @@ export const CurrencyCalculation: FC = (): ReactElement => {
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
             .then((response: AxiosResponse<CurrencyRateType[]>) => {
                 setRates(response.data);
-                console.log(response.data);
             });
     }, []);
 
@@ -143,7 +142,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
                         </RadioGroup>
                     </div>
                     <div className={classes.conversionResult}>
-                        <Button style={{backgroundColor: colors.blues.veryDark}}
+                        <Button style={{backgroundColor: colors.blues.veryDark, height: "46px"}}
                                 disabled={!amount || !values.valueRadio}
                                 onClick={showResult}
                                 variant="contained">Convert</Button>

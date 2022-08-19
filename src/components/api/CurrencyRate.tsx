@@ -3,16 +3,11 @@ import {FaDollarSign, FaEuroSign} from "react-icons/fa";
 import axios, {AxiosResponse} from "axios";
 import {CurrencyRateType} from "../../types/CurrencyRateType";
 import {CurrencyName} from "../enums/CurrencyName";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {currencyConverter} from "../../constants/PathConstants";
 
 export const CurrencyRate: FC = (): ReactElement => {
     const [rateValues, setRateValues] = useState<CurrencyRateType[]>([]);
-
-    const navigate = useNavigate();
-    const openConverter = (select: CurrencyName): void => {
-        navigate(`${currencyConverter}${select}`)
-    }
 
     const mapIcons: Map<CurrencyName, ReactElement> = new Map<CurrencyName, ReactElement>([
         [CurrencyName.USD, <FaDollarSign/>],
@@ -23,7 +18,6 @@ export const CurrencyRate: FC = (): ReactElement => {
         axios.get<CurrencyRateType[]>('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
             .then((response: AxiosResponse<CurrencyRateType[]>) => {
                 setRateValues(response.data);
-                console.log(response.data);
             })
             .catch((error) => {
                 console.error("Error gating currency!", error.message)
@@ -34,8 +28,7 @@ export const CurrencyRate: FC = (): ReactElement => {
         {rateValues
             .filter(rateValue => rateValue.ccy !== CurrencyName.BTC)
             .map((rateValue: CurrencyRateType, index: number) =>
-                <Link onClick={() => openConverter(rateValue.ccy)} key={index} to={`${currencyConverter}${rateValue.ccy}`}
-                >
+                <Link key={index} to={`${currencyConverter}${rateValue.ccy}`}>
                     <div className="Currency">
                         {mapIcons.get(rateValue.ccy)}{Number(rateValue.buy).toFixed(2)}
                     </div>
