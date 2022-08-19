@@ -1,13 +1,12 @@
 import React from 'react';
-import CurrentDate from "./header_components/CurrentDate";
-import {Link} from "react-router-dom";
-import {CurrencyRate} from "./api/CurrencyRate";
+import CurrentDate from "../header_components/CurrentDate";
+import {CurrencyRate} from "../api/CurrencyRate";
 import {WiCelsius, WiCloudRefresh} from "react-icons/wi";
-import SocialIcons from "./header_components/SocialIcons";
-import NavigationMenu from "./header_components/NavigationMenu";
+import SocialIcons from "../header_components/SocialIcons";
+import NavigationMenu from "../header_components/NavigationMenu";
 import {FaSearch} from "react-icons/fa";
-import {MainArticles} from "./header_components/MainArticles";
-import {AverageSalary} from "./header_components/AverageSalary";
+import {MainArticles} from "../header_components/MainArticles";
+import {AverageSalary} from "../header_components/AverageSalary";
 import {makeStyles} from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -17,7 +16,8 @@ const useStyles = makeStyles({
     },
 });
 
-const ApplicationStructure = () => {
+export const ApplicationMain = () => {
+
     const classes = useStyles();
     return (
         <div className={classes.wrapper}>
@@ -25,7 +25,7 @@ const ApplicationStructure = () => {
                 <header className="Header">
                     <div className="Header-items">
                         <CurrentDate/>
-                        <Link to={'/currency'}><CurrencyRate/></Link>
+                        <CurrencyRate/>
                         <div className="Weather">
                             <WiCloudRefresh/>
                             <div className="Value">+17</div>
@@ -57,5 +57,3 @@ const ApplicationStructure = () => {
 
     );
 };
-
-export default ApplicationStructure;
