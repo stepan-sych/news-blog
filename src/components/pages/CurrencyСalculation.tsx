@@ -7,6 +7,7 @@ import {colors} from "../theme/colors";
 import {Button, FormControlLabel, MenuItem, Radio, RadioGroup, TextField} from "@mui/material";
 import {mainPage} from "../../constants/PathConstants";
 import {CurrencyName} from "../enums/CurrencyName";
+import {Loader} from "../../features/loader";
 
 const useStyles = makeStyles({
     currencyConverter: {
@@ -63,6 +64,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const [amount, setAmount] = useState<string>("");
     const [helperText, setHelperText] = useState<string | undefined>(undefined);
     const [errorValidation, setErrorValidation] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
         currency: "" as CurrencyName,
         valueRadio: null,
@@ -88,9 +90,11 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     };
 
     useEffect(() => {
+        setIsLoading(true);
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
             .then((response: AxiosResponse<CurrencyRateType[]>) => {
                 setRates(response.data);
+                setIsLoading(false);
             });
     }, []);
 
@@ -108,53 +112,65 @@ export const CurrencyCalculation: FC = (): ReactElement => {
 
     return (
         <div className={classes.currencyConverter}>
-            <Link to={`${mainPage}`}>
-                <button className={classes.goHome}>Go home</button>
-            </Link>
-            <form className={classes.currencyForm}>
+            {isLoading ? (
+               <Loader/>
+            ) : (
                 <div>
-                    <div>
-                        <TextField
-                            style={{margin: "0 20px 30px 0", backgroundColor: colors.white.dark, borderRadius: "4px"}}
-                            variant="outlined"
-                            value={amount}
-                            error={errorValidation}
-                            helperText={errorValidation ? helperText : undefined}
-                            onChange={handleError}
-                        />
-                        <TextField
-                            select
-                            value={values.currency}
-                            onChange={handleChangeConverter("currency")}
-                        >
-                            {rates.map((currencyName: CurrencyRateType, index: number) => (
-                                <MenuItem key={index} value={currencyName.ccy}>
-                                    {currencyName.ccy}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        <RadioGroup
-                            value={values.valueRadio}
-                            onChange={handleChangeConverter("valueRadio")}
-                        >
-                            <FormControlLabel value={RadioButtons.Buy} control={<Radio/>} label={RadioButtons.Buy}/>
-                            <FormControlLabel value={RadioButtons.Sell} control={<Radio/>} label={RadioButtons.Sell}/>
-                        </RadioGroup>
-                    </div>
-                    <div className={classes.conversionResult}>
-                        <Button style={{backgroundColor: colors.blues.veryDark, height: "46px"}}
-                                disabled={!amount || !values.valueRadio}
-                                onClick={showResult}
-                                variant="contained">Convert</Button>
-                        <h2 className={classes.titleResult}>Converted Amount:</h2>
-                        {rates.filter((rate: CurrencyRateType) => rate.ccy === values.currency)
-                            .map((rate: CurrencyRateType, index: number) => (
-                                <p key={index} className={classes.result}>
-                                    {amount + " " + values.currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
-                                </p>))}
-                    </div>
+                    <Link to={`${mainPage}`}>
+                        <button className={classes.goHome}>Go home</button>
+                    </Link>
+                    <form className={classes.currencyForm}>
+                        <div>
+                            <div>
+                                <TextField
+                                    style={{
+                                        margin: "0 20px 30px 0",
+                                        backgroundColor: colors.white.dark,
+                                        borderRadius: "4px"
+                                    }}
+                                    variant="outlined"
+                                    value={amount}
+                                    error={errorValidation}
+                                    helperText={errorValidation ? helperText : undefined}
+                                    onChange={handleError}
+                                />
+                                <TextField
+                                    select
+                                    value={values.currency}
+                                    onChange={handleChangeConverter("currency")}
+                                >
+                                    {rates.map((currencyName: CurrencyRateType, index: number) => (
+                                        <MenuItem key={index} value={currencyName.ccy}>
+                                            {currencyName.ccy}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                                <RadioGroup
+                                    value={values.valueRadio}
+                                    onChange={handleChangeConverter("valueRadio")}
+                                >
+                                    <FormControlLabel value={RadioButtons.Buy} control={<Radio/>}
+                                                      label={RadioButtons.Buy}/>
+                                    <FormControlLabel value={RadioButtons.Sell} control={<Radio/>}
+                                                      label={RadioButtons.Sell}/>
+                                </RadioGroup>
+                            </div>
+                            <div className={classes.conversionResult}>
+                                <Button style={{backgroundColor: colors.blues.veryDark, height: "46px"}}
+                                        disabled={!amount || !values.valueRadio}
+                                        onClick={showResult}
+                                        variant="contained">Convert</Button>
+                                <h2 className={classes.titleResult}>Converted Amount:</h2>
+                                {rates.filter((rate: CurrencyRateType) => rate.ccy === values.currency)
+                                    .map((rate: CurrencyRateType, index: number) => (
+                                        <p key={index} className={classes.result}>
+                                            {amount + " " + values.currency + " = " + Number(output).toFixed(2) + " " + rate.base_ccy}
+                                        </p>))}
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            )}
         </div>
     );
 };

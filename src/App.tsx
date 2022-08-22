@@ -7,7 +7,6 @@ import {currencyConverter, errorPage, mainPage} from "./constants/PathConstants"
 import {PageNotFound} from "./components/pages/PageNotFound";
 
 const App = () => {
-
     return (
         <div className="App">
             <Routes>
