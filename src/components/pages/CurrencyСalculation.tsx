@@ -8,7 +8,6 @@ import {Button, FormControlLabel, MenuItem, Radio, RadioGroup, TextField} from "
 import {mainPage} from "../../constants/PathConstants";
 import {CurrencyName} from "../enums/CurrencyName";
 import {Loader} from "../../features/loader";
-import {loadTime} from "../../constants/LoadTime";
 
 const useStyles = makeStyles({
     currencyConverter: {
@@ -65,7 +64,7 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     const [amount, setAmount] = useState<string>("");
     const [helperText, setHelperText] = useState<string | undefined>(undefined);
     const [errorValidation, setErrorValidation] = useState<boolean>(false);
-    const [loadingInProgress, setLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [values, setValues] = useState<CurrencyStateTypes>({
         currency: "" as CurrencyName,
         valueRadio: null,
@@ -91,9 +90,11 @@ export const CurrencyCalculation: FC = (): ReactElement => {
     };
 
     useEffect(() => {
+        setIsLoading(true);
         axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
             .then((response: AxiosResponse<CurrencyRateType[]>) => {
                 setRates(response.data);
+                setIsLoading(false);
             });
     }, []);
 
@@ -109,15 +110,9 @@ export const CurrencyCalculation: FC = (): ReactElement => {
         }
     };
 
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, loadTime);
-    }, []);
-
     return (
         <div className={classes.currencyConverter}>
-            {loadingInProgress ? (
+            {isLoading ? (
                <Loader/>
             ) : (
                 <div>

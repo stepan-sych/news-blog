@@ -9,7 +9,8 @@ import {MainArticles} from "../header_components/MainArticles";
 import {AverageSalary} from "../header_components/AverageSalary";
 import {makeStyles} from "@mui/styles";
 import {Loader} from "../../features/loader";
-import {loadTime} from "../../constants/LoadTime";
+import axios, {AxiosResponse} from "axios";
+import {CurrencyRateType} from "../../types/CurrencyRateType";
 
 const useStyles = makeStyles({
     wrapper: {
@@ -19,18 +20,22 @@ const useStyles = makeStyles({
 });
 
 export const ApplicationMain = () => {
-    const [loadingInProgress, setLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [rates, setRates] = useState<CurrencyRateType[]>([])
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, loadTime);
+        setIsLoading(true);
+        axios.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
+            .then((response: AxiosResponse<CurrencyRateType[]>) => {
+                setRates(response.data);
+                setIsLoading(false);
+            });
     }, []);
 
     const classes = useStyles();
     return (
         <div className={classes.wrapper}>
-            {loadingInProgress ? (
+            {isLoading ? (
                 <Loader/>
             ) : (
                 <div>
